@@ -1,25 +1,38 @@
-.item-list {
-  max-width: 700px;
-  margin: 20px auto 0;
-  padding: 0 20px;
+.input-search {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 18px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background: #fff;
+  border: 1px solid #ddd;
+  width: 100%;
 }
 
-.item-list article{
+.item-list {
+  max-width: 800px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+}
+
+.item-list .item-card{
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin-bottom: 20px;
 }
 
-.item-list article p {
+.item-list .item-card p {
   font-size: 16px;
   color: #999;
   margin-top: 5px;
   line-height: 24px;
 }
 
-.item-list article a {
+.item-list .item-card a {
   height: 42px;
   border-radius: 5px;
   border: 2px solid #032541;
@@ -34,7 +47,7 @@
   align-items: center;
 }
 
-.item-list article a:hover {
+.item-list .item-card a:hover {
   background: #032541;
   color: #fff;
 }
@@ -66,4 +79,13 @@
 }
 .item-list .actions button[disabled]:hover {
   opacity: 0.3;
+}
+.row {
+  display: flex;
+}
+.column1 {
+  flex: 20%;
+}
+.column2 {
+  flex: 80%;
 }
