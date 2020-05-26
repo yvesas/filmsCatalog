@@ -1,0 +1,69 @@
+.item-list {
+  max-width: 700px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+}
+
+.item-list article{
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.item-list article p {
+  font-size: 16px;
+  color: #999;
+  margin-top: 5px;
+  line-height: 24px;
+}
+
+.item-list article a {
+  height: 42px;
+  border-radius: 5px;
+  border: 2px solid #032541;
+  background: none;
+  margin-top: 10px;
+  color: #032541;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-list article a:hover {
+  background: #032541;
+  color: #fff;
+}
+
+.item-list .actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.item-list .actions button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 0;
+  background: #032541;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.item-list .actions button:hover {
+  background: #3e6686;
+}
+
+.item-list .actions button[disabled] {
+  cursor: default;
+  opacity: 0.3;
+}
+.item-list .actions button[disabled]:hover {
+  opacity: 0.3;
+}
