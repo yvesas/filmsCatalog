@@ -29,7 +29,7 @@ export default class Main extends Component {
   loadItems = async (query, page = 1) => {
     let response = null;
     if(!query){
-      response = await api.get(`/trending/all/day?api_key=${this.apiKey}`);
+      response = await api.get(`/trending/all/day?api_key=${this.apiKey}&language=pt-BR`);
     }else{
       response = await api.get(`/search/multi?api_key=${this.apiKey}&page=${page}&language=pt-BR&query=${query}`);
     }
@@ -61,7 +61,7 @@ export default class Main extends Component {
   }
   
   keyPress = (e) => {
-    if(e.keyCode == 13){
+    if(e.keyCode === 13){
       this.setState({ query: e.target.value })
       this.loadItems(this.state.query)
     }
@@ -70,6 +70,8 @@ export default class Main extends Component {
   
 
   render(){
+    const {items, page, resultInfo} = this.state;
+
     const classes = makeStyles((theme) => ({
       intro: {
         backgroundColor: theme.palette.background.paper,
@@ -101,7 +103,7 @@ export default class Main extends Component {
         <div className={classes.intro}>
           <Container maxWidth="sm">
             <Typography component="h5" variant="h5" align="left" color="textPrimary" gutterBottom>
-              Welcome, make one search!
+              Welcome, feel free to search
             </Typography>
             <div className={classes.actions}>            
               <TextField label="look for..."  fullWidth="true" value={this.state.query} onKeyDown={this.keyPress} onChange={this.handleChange} /> 
@@ -110,6 +112,30 @@ export default class Main extends Component {
         </div>
 
         <Container className={classes.cardGrid} maxWidth="md">
+
+          <Grid container spacing={4}>
+            {items.map((item) => (
+              <Grid item key={item.id} xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    component="img"
+                    image={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.backdrop_path}`}
+                    title="poster"
+                    alt="poster"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {item.title || item.name}
+                    </Typography>
+                    <Typography>
+                      {item.overview}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
 
         </Container>
       </div>

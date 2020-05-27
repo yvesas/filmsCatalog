@@ -16,12 +16,12 @@ const Footer = () => (
       Thanks for your visit!
     </Typography>
     <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-      Something here! (faltou imaginação)
+      Thanks TMDB for API and layout! :P
     </Typography>
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://www.themoviedb.org/">
-         Api origin
+         TMDB API - original
       </Link>
       {' '}{new Date().getFullYear()}{'.'}
     </Typography>
