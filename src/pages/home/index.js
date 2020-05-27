@@ -100,11 +100,11 @@ export default class Main extends Component {
       <div>
         <div className={classes.intro}>
           <Container maxWidth="sm">
-            <Typography component="h4" variant="h5" align="center" color="textPrimary" gutterBottom>
-              Welcome The Movie Database (TMDb)
+            <Typography component="h5" variant="h5" align="left" color="textPrimary" gutterBottom>
+              Welcome, make one search!
             </Typography>
             <div className={classes.actions}>            
-              <TextField label="Search" variant="outlined" fullWidth="true" value={this.state.query} onKeyDown={this.keyPress} onChange={this.handleChange} /> 
+              <TextField label="look for..."  fullWidth="true" value={this.state.query} onKeyDown={this.keyPress} onChange={this.handleChange} /> 
             </div>
           </Container>
         </div>

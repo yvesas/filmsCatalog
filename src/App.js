@@ -7,7 +7,7 @@ import Home from './pages/home'
 const App = () => (
     <div className="App">
         <CssBaseline />
-        {/* <Header/> */}
+        <Header/>
         <main>
             <Home/>
         </main>

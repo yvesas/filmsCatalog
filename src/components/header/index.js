@@ -1,14 +1,12 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import logo from '../../assets/logo.svg';
 
 const Header = () => (
-  <AppBar position="relative">
+  <AppBar position="relative" style={{ background: '#032541' }} >
     <Toolbar>
-      <Typography variant="h6" color="inherit" noWrap>
-        The Movie Database (TMDb)
-      </Typography>
+      <img src={logo} alt="Logo" />
     </Toolbar>
   </AppBar> 
 );
