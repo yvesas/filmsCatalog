@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Pagination from '@material-ui/lab/Pagination';
 import OCard  from '../../components/OCard';
 
 import api from '../../services/api';
@@ -19,10 +20,10 @@ const styles = theme => ({
   cardGrid: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(6),
-    
   },
   body:{
     backgroundColor: '#ededed',
+    paddingBottom: theme.spacing(2)
   }
 });
 
@@ -43,29 +44,20 @@ const styles = theme => ({
   loadItems = async (query, page = 1) => {
     let response = null;
     if(!query){
-      response = await api.get(`/trending/all/day?api_key=${this.apiKey}&language=en-US`);
+      response = await api.get(`/trending/all/day?api_key=${this.apiKey}&page=${page}&language=en-US`);
     }else{
       response = await api.get(`/search/multi?api_key=${this.apiKey}&page=${page}&language=en-US&query=${query}`);
     }
-    
     const {results, ...resultInfo} = response.data;
     this.setState({items: results, resultInfo, page})
+    window.scrollTo(0, 0)
   }
 
-  prevPage = () => {
-    const {page} = this.state;
-    if(page === 1) return;
-
-    const pageNumber = page - 1;
-    this.loadItems(this.state.query, pageNumber)
-  }
-
-  nextPage = () => {
+  handleChangePage = async (event,value) => {
     const {page, resultInfo} = this.state;
-    if(page === resultInfo.pages) return;
-
-    const pageNumber = page + 1;
-    this.loadItems(this.state.query, pageNumber)
+    if(page === value) return;
+    if(value > resultInfo.total_pages) return;
+    this.loadItems(this.state.query, value)
   }
 
   handleChangeInputSearch = (e) => {
@@ -89,14 +81,13 @@ const styles = theme => ({
         <div className={classes.intro}>
           <Container maxWidth="sm">
             <Typography component="h5" variant="h5" align="left" color="textPrimary" gutterBottom>
-              Welcome, feel free to search
+              Welcome The Movie Database, feel free to search
             </Typography>
             <div className={classes.actions}>            
               <TextField label="look for..."  fullWidth={true} value={this.state.query} onKeyDown={this.keyPressInputSearch} onChange={this.handleChangeInputSearch} /> 
             </div>
           </Container>
         </div>
-
         {/* body page */}
         <div className={classes.body}>
         <Container className={classes.cardGrid} maxWidth="md">
@@ -108,6 +99,9 @@ const styles = theme => ({
             ))}
           </Grid>
         </Container>
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Pagination count={resultInfo.total_pages} page={page} onChange={this.handleChangePage} shape="rounded" size="large" />
+        </Grid>
         </div>
       </div>
     ) 

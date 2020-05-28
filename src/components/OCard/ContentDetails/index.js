@@ -4,9 +4,9 @@ import Rating from '@material-ui/lab/Rating';
 import api from '../../../services/api';
 
 const styles =  theme => ({
-  overview: {
-    fontSize: 14,
-    color: theme.palette.grey[500],
+  details: {
+    fontSize: 18,
+    color: theme.palette.grey[700],
   }
 });
 class ContentDetails extends Component {
@@ -70,10 +70,10 @@ class ContentDetails extends Component {
           let lastMovie = this.getLastMovieCredits(item.MovieCredits)
           return(
             <div>
-            <p className={classes.overview}>
+            <p className={classes.details}>
               Age: {age}
             </p>
-            <p className={classes.overview}>
+            <p className={classes.details}>
               Last movie: {lastMovie.title}
             </p>
           </div>)
@@ -89,11 +89,11 @@ class ContentDetails extends Component {
               size={'small'}
               readOnly
             />
-            <p className={classes.overview}>
-              Release date: {item.first_air_date || item.release_date}
-            </p>
-            <p className={classes.overview}>
+            <p className={classes.details}>
               Seasons: {item.number_of_seasons || '0'}
+            </p>
+            <p className={classes.details}>
+              Release date: {item.first_air_date || item.release_date}
             </p>
           </div>)
 
@@ -108,17 +108,17 @@ class ContentDetails extends Component {
               size={'small'}
               readOnly
             />
-            <p className={classes.overview}>
+            <p className={classes.details}>
               Rating: {item.vote_average}
             </p>
-            <p className={classes.overview}>
+            <p className={classes.details}>
               Release date: {item.first_air_date || item.release_date}
             </p>
           </div>)
 
         default:
           return( 
-              <p className={classes.overview}>
+              <p className={classes.details}>
                 {item.overview}
               </p>)
       } 
