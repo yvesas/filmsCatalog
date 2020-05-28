@@ -12,11 +12,14 @@ export default class ContentDetails extends Component {
   apiKey = "e83f89ff8e1495b5203d7218d3095d9b"
 
   componentWillMount = async() => {
-    let newItem = null;
+    let newItem = null
     switch(this.state.item.media_type){
       case 'person':
-        newItem =  await api.get(`/person/${this.state.item.id}?api_key=${this.apiKey}&language=en-US`);
-        this.setState({item: newItem.data})
+        let results = await api.get(`/person/${this.state.item.id}?api_key=${this.apiKey}&language=en-US`);
+        let credits = await api.get(`/person/${this.state.item.id}/movie_credits?api_key=${this.apiKey}&language=en-US`);
+        newItem = results.data;
+        newItem.MovieCredits = credits.data;
+        this.setState({item: newItem})
         break;
       case 'tv':
         newItem = await api.get(`/tv/${this.state.item.id}?api_key=${this.apiKey}&language=en-US`);
@@ -34,7 +37,20 @@ export default class ContentDetails extends Component {
         age = age - 1;
     }
     return age;
-}
+  }
+  getLastMovieCredits = (movieCredits) => {
+    let movie = {title:'', release_date:'0'}
+    if(movieCredits){
+      movieCredits.cast.map((film)=>{
+        let filmRelease = parseInt(film.release_date.replace("-",""))
+        let movieRelease = parseInt(movie.release_date.replace("-",""))
+        if(movieRelease < filmRelease){
+          movie = film
+        }
+      })
+    }
+    return movie
+  }
 
   render() {
     const styles =  makeStyles(({palette}) => ({
@@ -49,10 +65,14 @@ export default class ContentDetails extends Component {
       switch(mediaType) {
         case 'person':
           let age = this.getAge(item.birthday)
+          let lastMovie = this.getLastMovieCredits(item.MovieCredits)
           return(
             <div>
             <p className={styles.overview}>
               Age: {age}
+            </p>
+            <p className={styles.overview}>
+              Last movie: {lastMovie.title}
             </p>
           </div>)
 
