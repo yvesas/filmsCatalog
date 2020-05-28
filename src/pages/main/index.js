@@ -29,7 +29,6 @@ export default class Main extends Component {
     const {results, ...resultInfo} = response.data;
     this.setState({items: results, resultInfo, page})
     
-    console.log(this.state)
   }
 
   prevPage = () => {
@@ -57,13 +56,6 @@ export default class Main extends Component {
       this.setState({ query: e.target.value })
       this.loadItems(this.state.query)
     }
-  }
-
-  flippingThrough = (key) => {
-    this.setState({ flipping: !this.state.flipping, flippingKey: key})
-
-    console.log(key)
-    console.log(this.state)
   }
 
   render(){
