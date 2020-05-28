@@ -1,8 +1,15 @@
 import React, {Component}  from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import api from '../../../services/api';
-export default class ContentDetails extends Component {
+
+const styles =  theme => ({
+  overview: {
+    fontSize: 14,
+    color: theme.palette.grey[500],
+  }
+});
+class ContentDetails extends Component {
   state ={
     showOverview: this.props.showOverview,
     item: this.props.item,
@@ -53,13 +60,8 @@ export default class ContentDetails extends Component {
   }
 
   render() {
-    const styles =  makeStyles(({palette}) => ({
-      overview: {
-        fontSize: 14,
-        color: palette.grey[500],
-      },
-    }));
     const {item, mediaType} = this.state;
+    const classes = this.props
 
     const renderByFormat = () => {
       switch(mediaType) {
@@ -68,10 +70,10 @@ export default class ContentDetails extends Component {
           let lastMovie = this.getLastMovieCredits(item.MovieCredits)
           return(
             <div>
-            <p className={styles.overview}>
+            <p className={classes.overview}>
               Age: {age}
             </p>
-            <p className={styles.overview}>
+            <p className={classes.overview}>
               Last movie: {lastMovie.title}
             </p>
           </div>)
@@ -83,14 +85,14 @@ export default class ContentDetails extends Component {
               name={'rating'}
               value={item.vote_average}
               defaultValue={0} max={10}
-              className={styles.rating}
+              className={classes.rating}
               size={'small'}
               readOnly
             />
-            <p className={styles.overview}>
+            <p className={classes.overview}>
               Release date: {item.first_air_date || item.release_date}
             </p>
-            <p className={styles.overview}>
+            <p className={classes.overview}>
               Seasons: {item.number_of_seasons || '0'}
             </p>
           </div>)
@@ -102,21 +104,21 @@ export default class ContentDetails extends Component {
               name={'rating'}
               value={item.vote_average}
               defaultValue={0} max={10}
-              className={styles.rating}
+              className={classes.rating}
               size={'small'}
               readOnly
             />
-            <p className={styles.overview}>
+            <p className={classes.overview}>
               Rating: {item.vote_average}
             </p>
-            <p className={styles.overview}>
+            <p className={classes.overview}>
               Release date: {item.first_air_date || item.release_date}
             </p>
           </div>)
 
         default:
           return( 
-              <p className={styles.overview}>
+              <p className={classes.overview}>
                 {item.overview}
               </p>)
       } 
@@ -129,3 +131,5 @@ export default class ContentDetails extends Component {
     )
   }
 }
+
+export default withStyles(styles, { withTheme: true })(ContentDetails);
