@@ -1,5 +1,4 @@
 .input-search {
-  font-family: 'Avenir LT Std', sans-serif;
   font-size: 18px;
   padding: 10px 10px;
   margin-bottom: 10px;
@@ -13,7 +12,6 @@
   max-width: 650px;
   margin: 20px auto 0;
   padding: 0 20px;
-  font-family: 'Avenir LT Std', sans-serif;
 }
 
 .item-list .item-card{
