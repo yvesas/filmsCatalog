@@ -10,15 +10,19 @@ import api from '../../services/api';
 
 const styles = theme => ({
   intro: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    backgroundColor: '#ededed',
+    padding: theme.spacing(4, 0, 2),
   },
   actions: {
     marginTop: theme.spacing(4),
   },
   cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(6),
+    
+  },
+  body:{
+    backgroundColor: '#ededed',
   }
 });
 
@@ -94,6 +98,7 @@ const styles = theme => ({
         </div>
 
         {/* body page */}
+        <div className={classes.body}>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {items.map((item) => (
@@ -103,6 +108,7 @@ const styles = theme => ({
             ))}
           </Grid>
         </Container>
+        </div>
       </div>
     ) 
   }

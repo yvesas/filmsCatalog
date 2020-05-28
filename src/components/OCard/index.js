@@ -15,8 +15,8 @@ const styles =  theme => ({
     borderRadius: 16,
   },
   media: {
-    minWidth: '25%',
-    maxWidth: '25%',
+    minWidth: '50%',
+    maxWidth: '100%',
     flexShrink: 0,
     backgroundColor: theme.palette.grey[200],
     borderRadius: 12,
@@ -38,7 +38,7 @@ const styles =  theme => ({
   },
   overview: {
     fontSize: 14,
-    color: theme.palette.grey[500],
+    color: theme.palette.grey[700],
   },
 });
  class OCard extends Component {
@@ -66,7 +66,7 @@ const styles =  theme => ({
         )
       }else{
         return (
-          <ImageIcon color="action" className={classes.media}  />
+          <ImageIcon color="action" />
         )
       }
     }

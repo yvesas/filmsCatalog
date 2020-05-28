@@ -5,14 +5,13 @@ import Link from '@material-ui/core/Link';
 
 const styles = theme => ({
   footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
+    backgroundColor: '#ededed',
+    padding: theme.spacing(2),
   }
 });
-
 class Footer extends Component {
   render() {
-    const classes = this.props
+    const { classes } = this.props;
 
     return (
       <footer className={classes.footer}>
