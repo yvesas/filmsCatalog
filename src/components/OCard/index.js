@@ -59,7 +59,7 @@ export default class OCard extends Component {
           <CardMedia
             className={styles.media}
             component="img"
-            image={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.backdrop_path}`}
+            image={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path || item.profile_path}`}
             title={item.title || item.name}
             alt={item.title || item.name}
           />

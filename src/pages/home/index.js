@@ -25,9 +25,9 @@ export default class Main extends Component {
   loadItems = async (query, page = 1) => {
     let response = null;
     if(!query){
-      response = await api.get(`/trending/all/day?api_key=${this.apiKey}&language=pt-BR`);
+      response = await api.get(`/trending/all/day?api_key=${this.apiKey}&language=en-US`);
     }else{
-      response = await api.get(`/search/multi?api_key=${this.apiKey}&page=${page}&language=pt-BR&query=${query}`);
+      response = await api.get(`/search/multi?api_key=${this.apiKey}&page=${page}&language=en-US&query=${query}`);
     }
     
     const {results, ...resultInfo} = response.data;
