@@ -1,4 +1,5 @@
 import React, {Component}  from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -6,17 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-
-import cx from 'clsx';
 import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import Divider from '@material-ui/core/Divider';
 import Rating from '@material-ui/lab/Rating';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
-import ModeComment from '@material-ui/icons/ModeComment';
-import Favorite from '@material-ui/icons/Favorite';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Grow from '@material-ui/core/Grow';
 
-import { makeStyles } from '@material-ui/core/styles';
+import ModalDetails from '../../components/modalDetails';
+
 import api from '../../services/api';
 
 export default class Main extends Component {
@@ -25,8 +22,8 @@ export default class Main extends Component {
     resultInfo: {},
     page: 1,
     query: '',
+    showOverview: true
   }
-
   apiKey = "e83f89ff8e1495b5203d7218d3095d9b"
 
   componentDidMount() {
@@ -63,47 +60,35 @@ export default class Main extends Component {
     this.loadItems(this.state.query, pageNumber)
   }
 
-  handleChange = (e) => {
+  handleChangeInputSearch = (e) => {
     this.setState({ query: e.target.value });
   }
   
-  keyPress = (e) => {
+  keyPressInputSearch = (e) => {
     if(e.keyCode === 13){
       this.setState({ query: e.target.value })
       this.loadItems(this.state.query)
     }
   }
 
-  
+  clickOnCard = (id) => {
+    this.setState({ showOverview: !this.state.showOverview })
+  }
 
   render(){
     const {items, page, resultInfo} = this.state;
-    const classes = makeStyles((theme) => ({
+    const styles =  makeStyles(({ spacing, palette }) => ({
       intro: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(8, 0, 6),
+        backgroundColor: palette.background.paper,
+        padding: spacing(8, 0, 6),
       },
       actions: {
-        marginTop: theme.spacing(4),
+        marginTop: spacing(4),
       },
       cardGrid: {
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8),
+        paddingTop: spacing(8),
+        paddingBottom: spacing(8),
       },
-      card: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      },
-      cardMedia: {
-        paddingTop: '56.25%', // 16:9
-      },
-      cardContent: {
-        flexGrow: 1,
-      },
-    }));
-
-    const styles =  makeStyles(({ spacing, palette }) => ({
       card: {
         display: 'flex',
         padding: spacing(2),
@@ -131,88 +116,76 @@ export default class Main extends Component {
         marginRight: spacing(1.5),
         display: 'inline-block',
       },
-      body: {
+      overview: {
         fontSize: 14,
         color: palette.grey[500],
-      },
-      divider: {
-        margin: spacing(1, 0),
-      },
-      textFooter: {
-        fontSize: 14,
-      },
-      icon: {
-        fontSize: '1.2rem',
-        verticalAlign: 'bottom',
       },
     }));
     
     return (
       <div>
-        <div className={classes.intro}>
+        {/* head page */}
+        <div className={styles.intro}>
           <Container maxWidth="sm">
             <Typography component="h5" variant="h5" align="left" color="textPrimary" gutterBottom>
               Welcome, feel free to search
             </Typography>
-            <div className={classes.actions}>            
-              <TextField label="look for..."  fullWidth="true" value={this.state.query} onKeyDown={this.keyPress} onChange={this.handleChange} /> 
+            <div className={styles.actions}>            
+              <TextField label="look for..."  fullWidth="true" value={this.state.query} onKeyDown={this.keyPressInputSearch} onChange={this.handleChangeInputSearch} /> 
             </div>
           </Container>
         </div>
 
-        <Container className={classes.cardGrid} maxWidth="md">
-
+        {/* body page */}
+        <Container className={styles.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {items.map((item) => (
-              <Grid item key={item.id} xs={12} sm={6} md={4}>
-                {/* <Card className={classes.card}>
+             <Grid item key={item.id} xs={12} sm={6} md={4}>
+              <Card className={styles.card} direction="row">
+                <CardActionArea onClick={this.clickOnCard(item.id)} >
                   <CardMedia
-                    className={classes.cardMedia}
+                    className={styles.media}
                     component="img"
                     image={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.backdrop_path}`}
-                    title="poster"
-                    alt="poster"
+                    title={item.title || item.name}
+                    alt={item.title || item.name}
                   />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {item.title || item.name}
-                    </Typography>
-                    <Typography>
-                      {item.overview}
-                    </Typography>
-                  </CardContent>
-                </Card> */}
-              
-              <Card className={styles.card}>
-                <CardMedia
-                  className={styles.media}
-                  component="img"
-                  image={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.backdrop_path}`}
-                  title={item.title || item.name}
-                  alt={item.title || item.name}
-                />
-                <CardContent className={styles.content}>
+                  <CardContent className={styles.content}>
                   <Box mb={1}>
                     <h3 className={styles.heading}>{item.title || item.name}</h3>
-                    <Rating
-                      name={'rating'}
-                      value={2}
-                      className={styles.rating}
-                      size={'small'}
-                    />
                   </Box>
-                  <p className={styles.body}>
-                    {item.overview}
-                  </p>
+                  {this.state.showOverview ?
+                      <p className={styles.overview}>
+                        {item.overview}
+                      </p>
+                  : 
+                    <div>
+                      <Rating
+                        name={'rating'}
+                        value={item.vote_average}
+                        defaultValue={0} max={10}
+                        className={styles.rating}
+                        size={'small'}
+                        readOnly
+                      />
+                      <p className={styles.overview}>
+                        {item.first_air_date || item.release_date}
+                      </p>
+                    </div>
+                  }
+                  {/* <Grow in={this.state.showOverview}> */}
+                    
+                  {/* </Grow> */}
+                  {/* <Grow in={!this.state.showOverview}> */}
+                  
+                  {/* </Grow> */}
                 </CardContent>
-                
+                </CardActionArea>
               </Card>
-
-
+              {/* <ModalDetails></ModalDetails> */}
               </Grid>
             ))}
           </Grid>
-
         </Container>
       </div>
     ) 
