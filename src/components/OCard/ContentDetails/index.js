@@ -32,6 +32,8 @@ class ContentDetails extends Component {
         newItem = await api.get(`/tv/${this.state.item.id}?api_key=${this.apiKey}&language=en-US`);
         this.setState({item: newItem.data})        
         break;
+      default:
+        break;
     }
   }
 
@@ -54,6 +56,7 @@ class ContentDetails extends Component {
         if(movieRelease < filmRelease){
           movie = film
         }
+        return film
       })
     }
     return movie
