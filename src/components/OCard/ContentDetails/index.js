@@ -25,6 +25,17 @@ export default class ContentDetails extends Component {
     }
   }
 
+  getAge = (birth) => {
+    let today = new Date();
+    let birthDate = new Date(birth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        age = age - 1;
+    }
+    return age;
+}
+
   render() {
     const styles =  makeStyles(({palette}) => ({
       overview: {
@@ -37,10 +48,11 @@ export default class ContentDetails extends Component {
     const renderByFormat = () => {
       switch(mediaType) {
         case 'person':
+          let age = this.getAge(item.birthday)
           return(
             <div>
             <p className={styles.overview}>
-              {item.popularity}
+              Age: {age}
             </p>
           </div>)
 

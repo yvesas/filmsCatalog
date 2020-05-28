@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import ContentDetails from './ContentDetails';
+import ImageIcon from '@material-ui/icons/Image';
 
 export default class OCard extends Component {
   state ={
@@ -52,10 +53,10 @@ export default class OCard extends Component {
     }));
 
     const {item} = this.props;
-    return (
-      <Card className={styles.card} direction="row">
-        <CardActionArea onClick={this.clickOnCard} >
 
+    const showMedia = () => {
+      if(item.poster_path || item.profile_path){
+        return (
           <CardMedia
             className={styles.media}
             component="img"
@@ -63,6 +64,18 @@ export default class OCard extends Component {
             title={item.title || item.name}
             alt={item.title || item.name}
           />
+        )
+      }else{
+        return (
+          <ImageIcon color="action" className={styles.media}  />
+        )
+      }
+    }
+
+    return (
+      <Card className={styles.card} direction="row">
+        <CardActionArea onClick={this.clickOnCard} >
+          {showMedia()}
           <CardContent className={styles.content}>
             <Box mb={1}>
               <h3 className={styles.heading}>{item.title || item.name}</h3>
