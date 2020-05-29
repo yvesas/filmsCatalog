@@ -1,4 +1,4 @@
 node_modules/
-
+build/
 # for exclude Teste-FrontEnd.pdf file
 *.pdf
